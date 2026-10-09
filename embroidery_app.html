@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Γεννήτρια Μοτίβων Κεντήματος DMC</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="print.css" media="print">
+</head>
+<body>
+  <header>
+    <h1 data-i18n="appTitle">Γεννήτρια Μοτίβων Κεντήματος DMC</h1>
+    <div class="lang-switch">
+      <button type="button" class="lang-btn" data-lang="el" title="Ελληνικά" aria-label="Ελληνικά">
+        <svg viewBox="0 0 27 18" aria-hidden="true">
+          <rect width="27" height="18" fill="#0D5EAF"/>
+          <path d="M0 3h27M0 7h27M0 11h27M0 15h27" stroke="#fff" stroke-width="2"/>
+          <rect width="10" height="10" fill="#0D5EAF"/>
+          <path d="M5 0v10M0 5h10" stroke="#fff" stroke-width="2"/>
+        </svg>
+      </button>
+      <button type="button" class="lang-btn" data-lang="en" title="English" aria-label="English">
+        <svg viewBox="0 0 60 30" aria-hidden="true">
+          <clipPath id="ukClip"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+          <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+          <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/>
+          <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukClip)" stroke="#C8102E" stroke-width="4"/>
+          <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+          <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+  <div class="app-container">
+    <div class="controls-panel">
+      <div class="control-group">
+        <label for="patternTitleInput"><span class="label-text"><span data-i18n="nameLabel">Όνομα Κεντήματος:</span><span class="tip" tabindex="0" data-i18n-tip="tipName">i</span></span></label>
+        <input type="text" id="patternTitleInput" value="Μοτίβο Κεντήματος" data-i18n-placeholder="namePlaceholder" placeholder="Εισάγετε όνομα...">
+      </div>
+      <div class="control-group btn-with-tip">
+        <label class="btn" for="imageInput" data-i18n="chooseImage">Επιλογή Εικόνας</label>
+        <span class="tip" tabindex="0" data-i18n-tip="tipImage">i</span>
+        <input type="file" id="imageInput" accept="image/*">
+      </div>
+      <div class="control-group">
+        <label><span class="label-text"><span data-i18n="gridSize">Μέγεθος Πλέγματος (Πλακίδια):</span><span class="tip" tabindex="0" data-i18n-tip="tipGrid">i</span></span> <span id="tileSizeVal">50</span></label>
+        <input type="range" id="tileSize" min="10" max="150" value="50">
+      </div>
+      <div class="control-group">
+        <label><span class="label-text"><span data-i18n="colorCount">Αριθμός Χρωμάτων:</span><span class="tip" tabindex="0" data-i18n-tip="tipColors">i</span></span> <span id="colorCountVal">12</span></label>
+        <input type="range" id="colorCount" min="2" max="50" value="12">
+      </div>
+      <div class="control-group">
+        <label><span class="label-text"><span data-i18n="brightness">Φωτεινότητα:</span><span class="tip" tabindex="0" data-i18n-tip="tipBrightness">i</span></span> <span id="brightnessVal">0</span></label>
+        <input type="range" id="brightness" min="-100" max="100" value="0">
+      </div>
+      <div class="control-group">
+        <label><span class="label-text"><span data-i18n="contrast">Αντίθεση:</span><span class="tip" tabindex="0" data-i18n-tip="tipContrast">i</span></span> <span id="contrastVal">0</span></label>
+        <input type="range" id="contrast" min="-100" max="100" value="0">
+      </div>
+      <div class="control-group">
+        <div class="zoom-label-row">
+          <label for="zoomRange"><span class="label-text"><span data-i18n="zoom">Μεγέθυνση Μοτίβου:</span><span class="tip" tabindex="0" data-i18n-tip="tipZoom">i</span></span> <span id="zoomVal">100%</span></label>
+          <button type="button" class="btn btn-secondary btn-small" id="zoomFitBtn" data-i18n="fit">Προσαρμογή</button>
+        </div>
+        <input type="range" id="zoomRange" min="100" max="800" step="10" value="100">
+      </div>
+      <div class="control-group">
+        <label for="minCellSize"><span class="label-text"><span data-i18n="printMin">Εκτύπωση A4 – ελάχιστο τετράγωνο:</span><span class="tip" tabindex="0" data-i18n-tip="tipPrintMin">i</span></span></label>
+        <select id="minCellSize">
+          <option value="0" data-i18n="optSingle">Πάντα σε μία σελίδα</option>
+          <option value="2" data-i18n="opt2">2 mm (λιγότερες σελίδες)</option>
+          <option value="2.5" selected data-i18n="opt25">2.5 mm</option>
+          <option value="3" data-i18n="opt3">3 mm</option>
+          <option value="4" data-i18n="opt4">4 mm (μεγάλα τετράγωνα)</option>
+        </select>
+      </div>
+      <hr>
+      <div class="control-group tip-up">
+        <label><span class="label-text"><span data-i18n="projectFiles">Αρχείο Έργου (JSON):</span><span class="tip" tabindex="0" data-i18n-tip="tipJson">i</span></span></label>
+        <div class="btn-group">
+          <button class="btn btn-secondary" id="saveJsonBtn" data-i18n="saveJson">Αποθήκευση JSON</button>
+          <label class="btn btn-secondary" for="loadJsonInput" data-i18n="loadJson">Φόρτωση JSON</label>
+          <input type="file" id="loadJsonInput" accept=".json">
+        </div>
+      </div>
+      <div class="control-group btn-with-tip tip-up">
+        <button class="btn" id="openPrintBtn" data-i18n="openPrint">Προεπισκόπηση & Εκτύπωση PDF</button>
+        <span class="tip" tabindex="0" data-i18n-tip="tipPrint">i</span>
+      </div>
+    </div>
+    <div class="workspace">
+      <div class="view-containers">
+        <div class="view-card">
+          <h3 data-i18n="origTitle">Αρχική Εικόνα</h3>
+          <div class="img-preview-box">
+            <img id="origPreview" src="" data-i18n-alt="origAlt" alt="Προεπισκόπηση Αρχικής Εικόνας" style="display:none;">
+            <span id="origPlaceholder" data-i18n="origPlaceholder">Παρακαλώ επιλέξτε μια εικόνα</span>
+          </div>
+        </div>
+        <div class="view-card">
+          <h3 data-i18n="patternTitle">Μοτίβο Κεντήματος</h3>
+          <div class="pattern-zoom-box" id="patternBox">
+            <canvas id="patternCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="app-footer">
+    Copyright 2026 Christos Chartomatsidis
+  </footer>
+  <div class="print-preview-modal" id="printModal">
+    <div class="modal-content">
+      <div class="modal-actions" style="display:flex; gap:10px; width: 100%; justify-content: flex-end;">
+        <button class="btn" id="doPrintBtn" data-i18n="doPrint">Εκτύπωση σε PDF</button>
+        <button class="btn btn-secondary" id="closePrintBtn" data-i18n="close">Κλείσιμο</button>
+      </div>
+      <!-- A4 sheets are generated by app.js (buildPrintPages) -->
+      <div class="print-pages" id="printPages"></div>
+    </div>
+  </div>
+  <script src="dmc_colors.js"></script>
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

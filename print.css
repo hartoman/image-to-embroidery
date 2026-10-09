@@ -1,0 +1,80 @@
+/* Print-only styles. Always A4; each sheet picks its orientation through a
+   named page, so portrait and landscape sheets can share one PDF.
+   To print on bigger paper, scale the A4 PDF up ("Fit to page") – proportions stay the same. */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+  @page a4-portrait {
+    size: A4 portrait;
+    margin: 0;
+  }
+  @page a4-landscape {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  .page-sheet.portrait  { page: a4-portrait; }
+  .page-sheet.landscape { page: a4-landscape; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    min-height: 0;
+    height: auto;
+    display: block;
+  }
+
+  /* Remove (not just hide) the app UI so it takes no space and adds no pages */
+  body > *:not(.print-preview-modal) {
+    display: none !important;
+  }
+
+  .print-preview-modal {
+    display: block !important;
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    background: none;
+    overflow: visible;
+  }
+
+  .modal-content {
+    display: block;
+    padding: 0;
+    border-radius: 0;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .modal-actions,
+  .print-footer-placeholder {
+    display: none !important;
+  }
+
+  .page-sheet {
+    box-shadow: none;
+    margin: 0;
+    overflow: hidden;
+    /* A hair under the paper height so rounding never spills onto a blank 2nd page */
+    height: calc(var(--page-h) - 0.5mm);
+    break-inside: avoid;
+    break-after: page;
+  }
+
+  .page-sheet:last-child {
+    break-after: auto;
+  }
+
+  .print-pages {
+    display: block;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

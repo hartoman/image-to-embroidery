@@ -1,0 +1,587 @@
+:root {
+  --bg-color: #f4f6f8;
+  --panel-bg: #ffffff;
+  --accent: #2b580c;
+  --border: #dcdcdc;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: var(--accent);
+  color: white;
+  padding: 15px 20px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.app-container {
+  display: flex;
+  flex: 1;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.controls-panel {
+  width: 340px;
+  background: var(--panel-bg);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  height: fit-content;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-group label:not(.btn) {
+  font-weight: 600;
+  font-size: 0.9em;
+  color: #444;
+  display: flex;
+  justify-content: space-between;
+}
+
+input[type="text"] {
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.btn {
+  background: var(--accent);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  transition: background 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.btn:hover {
+  background: #1e3f08;
+}
+
+.btn-secondary {
+  background: #555;
+}
+.btn-secondary:hover {
+  background: #333;
+}
+
+.btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-group .btn {
+  flex: 1;
+}
+
+select, input[type="range"] {
+  width: 100%;
+  padding: 6px;
+}
+
+.workspace {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.view-containers {
+  display: grid;
+  /* minmax(0, …) stops a large canvas from widening its column */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  min-height: 500px;
+}
+
+.view-card {
+  min-width: 0;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.view-card h3 {
+  margin-bottom: 12px;
+  font-size: 1.1em;
+  color: #333;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 4px;
+  width: 100%;
+  text-align: center;
+}
+
+.img-preview-box, .pattern-zoom-box {
+  width: 100%;
+  height: 480px;
+  overflow: auto;
+  border: 1px dashed var(--border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fafafa;
+  position: relative;
+}
+
+/* "Safe" centering: margin:auto centers when the canvas is smaller than the box,
+   but unlike justify/align-content:center it never cuts off the top/left when
+   the canvas is zoomed larger than the box, so every part stays scrollable. */
+.pattern-zoom-box {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.pattern-zoom-box canvas {
+  margin: auto;
+  flex-shrink: 0;
+}
+
+.zoom-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.zoom-label-row label {
+  flex: 1;
+  min-width: 0;
+}
+
+.btn-small {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.img-preview-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+canvas {
+  image-rendering: pixelated;
+}
+
+footer.app-footer {
+  text-align: center;
+  padding: 15px;
+  background: #e0e0e0;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-top: auto;
+}
+
+.print-preview-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  padding: 20px;
+}
+
+.print-preview-modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-height: 95vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.page-sheet {
+  background: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  padding: 3.3mm; /* Reduced page margins to 1/3 */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 0 auto;
+}
+
+/* NOTE: the fixed sizes below (sheet padding, header, gaps, legend metrics)
+   are mirrored in PRINT_LAYOUT in app.js, which uses them to pick the layout. */
+.print-pages {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.page-sheet { width: var(--page-w); height: var(--page-h); }
+.page-sheet.portrait  { --page-w: 210mm; --page-h: 297mm; }
+.page-sheet.landscape { --page-w: 297mm; --page-h: 210mm; }
+
+.print-header {
+  flex: 0 0 auto;
+  height: 12mm;
+  margin-bottom: 1.5mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 10px;
+  border-bottom: 2px solid #000;
+  padding-bottom: 3px;
+  overflow: hidden;
+}
+
+.print-header > div {
+  min-width: 0;
+}
+
+.print-title {
+  font-size: 16pt;
+  font-weight: bold;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.print-subtitle {
+  font-size: 8pt;
+  color: #555;
+  line-height: 1.2;
+}
+
+.print-page-info {
+  font-size: 9pt;
+  font-weight: bold;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.print-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  gap: 3mm;
+}
+
+.print-body.legend-side {
+  flex-direction: row;
+}
+
+.print-body.legend-bottom {
+  flex-direction: column;
+}
+
+/* The canvas fills whatever space is left on the sheet and scales to fit
+   (object-fit), so the grid is as large as the paper allows, never overflowing. */
+.print-grid-container {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+}
+
+.print-grid-container canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: auto;
+}
+
+/* Section pages share one scale; anchor them top-left so stitch 1 of every
+   section sits in the same place on the paper */
+.print-grid-container.section canvas {
+  object-position: left top;
+}
+
+/* Columns/rows of the legend grid are set inline by app.js */
+.print-legend-container {
+  flex: 0 0 auto;
+  border: 1px solid #000;
+  padding: 6px;
+  font-size: 8pt;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.legend-title {
+  flex: 0 0 auto;
+  height: 16px;
+  font-weight: bold;
+  font-size: 8.5pt;
+  line-height: 13px;
+  border-bottom: 1px solid #ccc;
+  white-space: nowrap;
+}
+
+.legend-grid {
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 8px;
+  row-gap: 3px;
+}
+
+.legend-item {
+  height: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.legend-box {
+  width: 14px;
+  height: 14px;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6.5pt;
+  font-weight: bold;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.legend-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.legend-code {
+  font-weight: bold;
+  font-size: 7.5pt;
+}
+
+.legend-name {
+  font-size: 6.5pt;
+  color: #444;
+}
+
+.print-footer-placeholder {
+  position: absolute;
+  bottom: 2mm;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 10pt;
+  font-weight: bold;
+}
+
+/* Language switch (flags) */
+header {
+  position: relative;
+  padding-left: 110px;
+  padding-right: 110px;
+}
+
+.lang-switch {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.lang-btn {
+  width: 36px;
+  height: 24px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 3px;
+  background: none;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.2s, border-color 0.2s;
+  overflow: hidden;
+}
+
+.lang-btn svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lang-btn:hover,
+.lang-btn[aria-pressed="true"] {
+  opacity: 1;
+}
+
+.lang-btn[aria-pressed="true"] {
+  border-color: #fff;
+}
+
+/* Help tooltips: hover (or tap/focus) the ⓘ icon; the bubble spans the
+   control group's width so it never runs off the panel */
+.control-group {
+  position: relative;
+}
+
+.label-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #888;
+  color: #fff;
+  font: italic bold 11px Georgia, serif;
+  cursor: help;
+  user-select: none;
+}
+
+.tip:hover,
+.tip.open {
+  background: var(--accent);
+  outline: none;
+}
+
+.tip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tip::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #2d2d2d;
+  color: #fff;
+  font: normal 400 0.85rem/1.45 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: left;
+  white-space: normal;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  /* display:none (not just invisible) so closed tooltips take no space
+     and can't stretch the page */
+  display: none;
+}
+
+/* Hover shows a tooltip; tap/click/keyboard pins one (.open, managed in app.js).
+   Hovering any other tip unpins it, so only one is ever visible. */
+.tip:hover::after,
+.tip.open::after {
+  display: block;
+}
+
+/* Controls at the bottom of the panel open their tooltip upwards */
+.tip-up .tip::after {
+  top: auto;
+  bottom: calc(100% + 6px);
+}
+
+.btn-with-tip {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-with-tip .btn {
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 15px 20px 45px;
+  }
+  .lang-switch {
+    top: auto;
+    bottom: 10px;
+    transform: translateX(50%);
+    right: 50%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .controls-panel {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .view-containers {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Print styles live in print.css */
